@@ -1,0 +1,23 @@
+/* import React from "react";
+import { Navbar } from "../../components/Navbar/Navbar";
+import TitleCards from "../../components/TitleCards/TitleCards";
+// import "./Navbar.css";
+import { Link } from "react-router-dom";
+
+
+import "../../styles/PageAnimation.css";
+import MajorCards from "../../components/TitleCards/MajorCards";
+
+const Movies = () => {
+  return (
+    <>
+      <Navbar />
+      <div className="page-section fade-in-slide more-cards">
+        <MajorCards title="Popular Movies" category="movie/popular" />
+        <TitleCards title="Airing Today" category="tv/airing_today" />
+      </div>
+    </>
+  );
+};
+
+export default Movies; */

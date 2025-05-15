@@ -2,9 +2,10 @@ import React, { useEffect, useState } from "react";
 import "./Player.css";
 import back_arrow_icon from "../../assets/back_arrow_icon.png";
 import { useNavigate, useParams } from "react-router-dom";
+import { Navbar } from "../../components/Navbar/Navbar";
 
 const Player = () => {
-
+  <Navbar />;
 
   const { id } = useParams();
   const navigate = useNavigate();
@@ -30,7 +31,7 @@ const Player = () => {
       `https://api.themoviedb.org/3/movie/${id}/videos?language=en-US`,
       options
     )
-    // (1233069)
+      // (1233069)
       .then((res) => res.json())
       .then((res) => setApiData(res.results[0]))
       .catch((err) => console.error(err));
@@ -42,7 +43,7 @@ const Player = () => {
         src={back_arrow_icon}
         alt=""
         onClick={() => {
-          navigate(-2);
+          navigate("/");
         }}
       />
       <iframe

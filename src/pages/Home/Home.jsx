@@ -7,6 +7,7 @@ import play_icon from "../../assets/play_icon.png";
 import info_icon from "../../assets/info_icon.png";
 import TitleCards from "../../components/TitleCards/TitleCards";
 import Footer from "../../components/Footer/Footer";
+import { useNavigate } from "react-router-dom";
 
 const Home = () => {
   return (
@@ -39,10 +40,11 @@ const Home = () => {
       </div>
 
       <div className="more-cards">
-        <TitleCards title={"Blocbuster Movies"} category={"top_rated"} />
-        <TitleCards title={"Only On Netflix"}category={"popular"} />
-        <TitleCards title={"Upcoming"} category={"upcoming"}/>
-        <TitleCards title={"Top pics for you"} category={"now_playing"} />
+        {/* <TitleCards title="Popular on Netflix" category="movie/popular" /> */}
+        <TitleCards title="Blockbuster Movies" category="movie/top_rated" />
+        <TitleCards title="Only on Netflix" category="tv/popular" />
+        <TitleCards title="Top Picks for You" category="movie/now_playing" />
+        <TitleCards title="Upcoming" category="movie/upcoming" />
       </div>
 
       <Footer />

@@ -1,0 +1,19 @@
+.fade-in-slide {
+  animation: fadeInSlide 0.6s ease-in-out;
+  transition: border-radius 0.3s ease; /* Smooth transition for border-radius */
+}
+
+.fade-in-slide:hover {
+  border-radius: 50%; /* Make the div a circle when hovered */
+}
+
+@keyframes fadeInSlide {
+  0% {
+    opacity: 0;
+    transform: scale(0.95) translateY(20px);
+  }
+  100% {
+    opacity: 1;
+    transform: scale(1) translateY(0);
+  }
+}

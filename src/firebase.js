@@ -1,4 +1,3 @@
-// Import the functions you need from the SDKs you need
 import { initializeApp } from "firebase/app";
 import { getAnalytics } from "firebase/analytics";
 import {
@@ -10,28 +9,21 @@ import {
 import { addDoc, collection, getFirestore } from "firebase/firestore/lite";
 import { toast } from "react-toastify";
 
-// https://firebase.google.com/docs/web/setup#available-libraries
-
-// Your web app's Firebase configuration
-// For Firebase JS SDK v7.20.0 and later, measurementId is optional
 const firebaseConfig = {
   apiKey: "AIzaSyC7xReN2RDJtU877jdtCO5E8mIFh5JN84Y",
   authDomain: "netflix-clone-f7f60.firebaseapp.com",
   projectId: "netflix-clone-f7f60",
-  storageBucket: "netflix-clone-f7f60.firebasestorage.app",
+  storageBucket: "netflix-clone-f7f60.appspot.com",
   messagingSenderId: "1086913141248",
   appId: "1:1086913141248:web:6800892bc4d80b7c48d6e5",
   measurementId: "G-H259THVK2K",
 };
 
-// Initialize Firebase
 const app = initializeApp(firebaseConfig);
 const analytics = getAnalytics(app);
-
 const auth = getAuth(app);
 const db = getFirestore(app);
 
-// Authentication
 const signup = async (name, email, password) => {
   try {
     const res = await createUserWithEmailAndPassword(auth, email, password);
@@ -53,12 +45,19 @@ const login = async (email, password) => {
     await signInWithEmailAndPassword(auth, email, password);
   } catch (error) {
     console.log(error);
-    toast.error(error.code.split('/')[1].split('-').join(" "));
+    toast.error(error.code.split("/")[1].split("-").join(" "));
   }
 };
 
-const logout = () => {
-  signOut(auth);
+const logout = (navigate) => {
+  signOut(auth)
+    .then(() => {
+      navigate("/login");
+    })
+    .catch((error) => {
+      console.log(error);
+      toast.error("Logout failed");
+    });
 };
 
 export { auth, db, login, signup, logout };

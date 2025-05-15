@@ -21,47 +21,62 @@ const TitleCards = ({ title, category }) => {
     event.preventDefault();
     cardsRef.current.scrollLeft += event.deltaY;
   };
-useEffect(() => {
-  const cardContainer = cardsRef.current;
 
-  // Fetch movie data
-  fetch(
-    `https://api.themoviedb.org/3/movie/${
-      category ? category : "now_playing"
-    }?language=en-US&page=1`,
-    options
-  )
-    .then((res) => res.json())
-    .then((res) => {
-      setApiData(res.results);
-    })
-    .catch((err) => console.error(err));
+  useEffect(() => {
+    const cardContainer = cardsRef.current;
 
-  // Add scroll listener
-  cardContainer.addEventListener("wheel", handleWheel);
+    let apiUrl = "";
 
-  // Cleanup function to remove event listener when component unmounts
-  return () => {
-    cardContainer.removeEventListener("wheel", handleWheel);
-  };
-}, []);
+    // Default fallback if no category is passed
+    if (!category) {
+      //api.themoviedb.org/3/search/movie?query=lion&include_adult=false&language=en-US&page=1
 
+      https: apiUrl =
+        "https://api.themoviedb.org/3/movie/now_playing?language=en-US&page=1";
+    } else if (
+      category.startsWith("discover/") ||
+      category.startsWith("trending/")
+    ) {
+      apiUrl = `https://api.themoviedb.org/3/${category}&language=en-US&page=1`;
+    } else if (category.includes("?")) {
+      apiUrl = `https://api.themoviedb.org/3/${category}&language=en-US&page=1`;
+    } else {
+      apiUrl = `https://api.themoviedb.org/3/${category}?language=en-US&page=1`;
+    }
+
+    fetch(apiUrl, options)
+      .then((res) => res.json())
+      .then((res) => {
+        if (res && res.results) {
+          setApiData(res.results);
+        } else {
+          setApiData([]);
+        }
+      })
+      .catch((err) => console.error("API fetch error:", err));
+
+    cardContainer.addEventListener("wheel", handleWheel);
+    return () => {
+      cardContainer.removeEventListener("wheel", handleWheel);
+    };
+  }, [category]);
 
   return (
     <div className="title-Cards">
       <h2>{title ? title : "Popular On Netflix"}</h2>
       <div className="card-list" ref={cardsRef}>
-        {apiData.map((card, index) => {
-          return (
-            <Link to={`/player/${card.id}`} className="card" key={index}>
-              <img
-                src={`https://image.tmdb.org/t/p/w500` + card.backdrop_path}
-                alt=""
-              />
-              <p>{card.original_title}</p>
-            </Link>
-          );
-        })}
+        {apiData?.length > 0 &&
+          apiData.map((card, index) => {
+            return (
+              <Link to={`/player/${card.id}`} className="card" key={index}>
+                <img
+                  src={`https://image.tmdb.org/t/p/w500` + card.backdrop_path}
+                  alt=""
+                />
+                <p>{card.title || card.name || card.original_title}</p>
+              </Link>
+            );
+          })}
       </div>
     </div>
   );

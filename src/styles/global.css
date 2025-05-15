@@ -1,0 +1,16 @@
+/* Global layout spacing */
+.more-cards {
+  padding-left: 6%;
+}
+
+/* Reusable page layout (optional) */
+.page-section {
+  padding-top: 70px;
+  padding-left: 6%;
+}
+
+@media (max-width: 500px) {
+  .page-section {
+    padding-top: 10px;
+  }
+}
